@@ -11,7 +11,6 @@ export default function useTimers() {
   const [completedTimer, setCompletedTimer] = useState(null);
   const intervals = useRef({});
 
-  // Load timers and history from storage
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -35,7 +34,6 @@ export default function useTimers() {
     loadData();
   }, []);
 
-  // Save timers to storage whenever they change
   useEffect(() => {
     const saveTimers = async () => {
       try {
@@ -50,7 +48,6 @@ export default function useTimers() {
     }
   }, [timers, loading]);
 
-  // Save history to storage whenever it changes
   useEffect(() => {
     const saveHistory = async () => {
       try {
@@ -65,7 +62,6 @@ export default function useTimers() {
     }
   }, [history, loading]);
 
-  // Clean up intervals on unmount
   useEffect(() => {
     return () => {
       Object.values(intervals.current).forEach(interval => clearInterval(interval));
@@ -90,24 +86,20 @@ export default function useTimers() {
     setTimers(prev => 
       prev.map(timer => {
         if (timer.id === id) {
-          // Clear any existing interval for this timer
           if (intervals.current[id]) {
             clearInterval(intervals.current[id]);
           }
           
-          // Set up a new interval
           intervals.current[id] = setInterval(() => {
             setTimers(current => 
               current.map(t => {
                 if (t.id === id && t.remainingTime > 0 && t.status === 'running') {
                   const newRemainingTime = t.remainingTime - 1;
                   
-                  // Check if timer completed
                   if (newRemainingTime === 0) {
                     clearInterval(intervals.current[id]);
                     delete intervals.current[id];
                     
-                    // Add to history
                     const completedTimer = {
                       ...t,
                       completedAt: new Date().toISOString(),
@@ -196,7 +188,6 @@ export default function useTimers() {
       prev.map(timer => {
         if (timer.category === category && timer.status !== 'completed') {
           if (timer.status !== 'running') {
-            // Start this timer
             startTimer(timer.id);
           }
           return {

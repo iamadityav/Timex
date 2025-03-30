@@ -5,7 +5,6 @@ const TIMERS_STORAGE_KEY = '@MyTimers:timers';
 const HISTORY_STORAGE_KEY = '@MyTimers:history';
 
 export const storage = {
-  // Save timers to AsyncStorage
   saveTimers: async (timers) => {
     try {
       const jsonValue = JSON.stringify(timers);
@@ -15,7 +14,6 @@ export const storage = {
     }
   },
 
-  // Load timers from AsyncStorage
   loadTimers: async () => {
     try {
       const jsonValue = await AsyncStorage.getItem(TIMERS_STORAGE_KEY);
@@ -26,7 +24,6 @@ export const storage = {
     }
   },
 
-  // Save history to AsyncStorage
   saveHistory: async (history) => {
     try {
       const jsonValue = JSON.stringify(history);
@@ -36,7 +33,6 @@ export const storage = {
     }
   },
 
-  // Load history from AsyncStorage
   loadHistory: async () => {
     try {
       const jsonValue = await AsyncStorage.getItem(HISTORY_STORAGE_KEY);
@@ -47,7 +43,6 @@ export const storage = {
     }
   },
 
-  // Clear all data from AsyncStorage
   clearAllData: async () => {
     try {
       await AsyncStorage.clear();
@@ -56,7 +51,6 @@ export const storage = {
     }
   },
 
-  // Remove a specific item from AsyncStorage
   removeItem: async (key) => {
     try {
       await AsyncStorage.removeItem(key);

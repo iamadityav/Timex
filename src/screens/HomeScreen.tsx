@@ -34,7 +34,6 @@ const HomeScreen = () => {
   
   const [isAddTimerVisible, setIsAddTimerVisible] = useState(false);
   
-  // Group timers by category
   const timersByCategory = useMemo(() => {
     const grouped = {};
     
@@ -48,12 +47,10 @@ const HomeScreen = () => {
     return grouped;
   }, [timers]);
   
-  // Get unique categories
   const categories = useMemo(() => {
     return Object.keys(timersByCategory).sort();
   }, [timersByCategory]);
   
-  // Handle adding a new timer
   const handleAddTimer = useCallback((name, duration, category) => {
     if (!name.trim()) {
       Alert.alert('Error', 'Please enter a timer name');
@@ -74,7 +71,6 @@ const HomeScreen = () => {
     setIsAddTimerVisible(false);
   }, [addTimer]);
   
-  // Handle timer deletion with confirmation
   const handleDeleteTimer = useCallback((timerId) => {
     Alert.alert(
       'Delete Timer',
@@ -93,7 +89,6 @@ const HomeScreen = () => {
     );
   }, [deleteTimer]);
   
-  // Get all available categories for the add timer modal
   const allCategories = useMemo(() => {
     return categories.length > 0 ? categories : ['Work', 'Study', 'Exercise', 'Break'];
   }, [categories]);
